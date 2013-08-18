@@ -1,5 +1,12 @@
 *~
+<<<<<<< HEAD
 incomplete/
 a.out
 *.o
 to implement
+=======
+incomplete/
+a.out
+*.o
+to implement
+>>>>>>> IDEA
