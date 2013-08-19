@@ -28,8 +28,8 @@
 #
 # *1. Define all the objects.
 # *2. Generate the Terminal Table.
-# 3. Read the source file and seperate all the tokens.
-# 4. Place the tokens into the UST, donot identify the type of tokens yet.
+# *3. Read the source file and seperate all the tokens.
+# *4. Place the tokens into the UST, donot identify the type of tokens yet.
 # 5. Now traverse over the UST and identify the type of each token.
 # 6. Parsing Complete.
 
