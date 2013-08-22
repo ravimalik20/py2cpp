@@ -42,12 +42,27 @@ class Token:
 		self.id=id
 
 	def __str__(self):
-		return "%d:%s"%(self.id,self.token)
+		return "[%d:%s]"%(self.id,self.token)
+
+class Table:
+	def __init__(self):
+		self.table=[]
+		self.top=-1
+
+	def place(self,token):
+		# Generate space for the token in the table.
+		self.top+=1
+		tk=Token(self.top,token)
+		self.table.append(tk)
+
+		return tk
 
 # Terminal Table
 class TerminalTable:
 	def __init__(self):
 		self.table=[]
+		#super(TerminalTable,self).__init__()
+		#Table.__init__(self)
 
 	def generate(self,f_name):
 		if len(self.table)!=0:
@@ -65,6 +80,12 @@ class TerminalTable:
 
 			print "Terminal Table generated from file %s!!"%f_name
 
+	def find(self,token):
+		for i in self.table:
+			if i.token==token:
+				return i
+		return None
+
 	def __str__(self):
 		for i in self.table:
 			print i
@@ -72,9 +93,11 @@ class TerminalTable:
 
 
 # Identifier Table
-class IdentifierTable:
+class IdentifierTable(Table):
 	def __init__(self):
-		self.table=[]
+		#self.table=[]
+		#super(TerminalTable,self).__init__()
+		Table.__init__(self)
 
 	def __str__(self):
 		for i in self.table:
@@ -82,9 +105,11 @@ class IdentifierTable:
 		return ""
 
 # Literal Table
-class LiteralTable:
+class LiteralTable(Table):
 	def __init__(self):
-		self.table=[]
+		#self.table=[]
+		#super(TerminalTable,self).__init__()
+		Table.__init__(self)
 
 	def __str__(self):
 		for i in self.table:
@@ -123,7 +148,11 @@ class UniformSymbolTable:
 
 class Parser:
 	def __init__(self,trm,lit,ide):
-		# All the tables.		
+		# All the tables.
+		self.trm=trm
+		self.lit=lit
+		self.ide=ide
+		
 		self.trm_table=trm.table
 		self.lit_table=lit.table
 		self.ide_table=ide.table
@@ -138,14 +167,14 @@ class Parser:
 		It returns the value of the counter of the line.		
 		'''
 		i=i+1
-		ust.place(quote,self.type_token(quote))
+		self.place(quote)
 		token=""
 		while line[i]!=quote:
 			token=token+line[i]
 			i+=1;
-		ust.place(token,self.type_token(token))
+		self.place(token)
 		token=""
-		ust.place(quote,self.type_token(quote))
+		self.place(quote)
 		return i
 
 	def type_token(self,token):
@@ -158,9 +187,19 @@ class Parser:
 		else:
 			return type_table['ide']
 
+	def place(self,token):
+		ty=self.type_token(token)
+		if ty==type_table['trm']:
+			token_obj=self.trm.find(token)
+		elif ty==type_table['lit']:
+			token_obj=self.lit.place(token)
+		else:
+			token_obj=self.ide.place(token)
+		self.ust.place(token_obj,ty)
+
 	def generate(self,lines):
 		'''lines must contain an ending \n char.'''
-		ust=UniformSymbolTable()
+		self.ust=UniformSymbolTable()
 		for line in lines:
 			i=0
 			n=len(line)
@@ -168,28 +207,28 @@ class Parser:
 			while i<n:
 				if line[i]=="#":
 					if len(token)!=0:
-						ust.place(token,self.type_token(token))
+						self.place(token)
 						token=""
 					break
 				elif line[i]=="'":
 					if len(token)!=0:
-						ust.place(token,self.type_token(token))
+						self.place(token)
 						token=""
-					i=self.handle_string("'",line,i,ust)	# handle_string has to keep in mind to place the quotes in UST.
+					i=self.handle_string("'",line,i,self.ust)	# handle_string has to keep in mind to place the quotes in UST.
 				elif line[i]=='"':
 					if len(token)!=0:
-						ust.place(token,self.type_token(token))
+						self.place(token)
 						token=""
-					i=self.handle_string('"',line,i,ust)
+					i=self.handle_string('"',line,i,self.ust)
 				elif line[i] in self.bchar:
 					if len(token)!=0:
-						ust.place(token,self.type_token(token))
+						self.place(token)
 						token=""
-					ust.place(line[i],self.type_token(line[i]))
+					self.place(line[i])
 				else:
 					token=token+line[i]
 				i+=1
-		return ust
+		return self.ust
 
 	def generate_file(self,f_name):
 		f=open(f_name,"r")
@@ -207,7 +246,7 @@ if __name__=='__main__':
 	trm.generate('terminals.cpkl')
 
 	# print the generated terminal table.
-	#print trm
+	print "Terminal Table",trm
 
 	# Instantiating the parser.
 	p=Parser(trm,lit,ide)
@@ -216,4 +255,8 @@ if __name__=='__main__':
 	ust=p.generate_file(sys.argv[1])
 
 	# Printing UST
-	print ust
+	print "Uniform Symbol Table:",ust
+
+	print "Literal Table:",lit
+
+	print "Identifier Table",ide
