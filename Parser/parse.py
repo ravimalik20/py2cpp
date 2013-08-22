@@ -101,7 +101,7 @@ class USTElement:
 		self.type=type
 
 	def __str__(self):
-		return "%d:%s:%d"%(self.id,self.token,self.type)
+		return "%d:%s:%s"%(self.id,self.token,type_table[self.type])
 
 # Uniform Symbol Table
 class UniformSymbolTable:
@@ -109,12 +109,11 @@ class UniformSymbolTable:
 		self.table=[]
 		self.top=-1
 
-	def place(self,token):
+	def place(self,token,type):
 		self.top+=1
 
 		# At present token is stored as a string but it has to be a token object. For that we have to find the type of the token.
-		u=USTElement(self.top,token,1)
-		print u		
+		u=USTElement(self.top,token,type)	
 		self.table.append(u)
 
 	def __str__(self):
@@ -139,15 +138,25 @@ class Parser:
 		It returns the value of the counter of the line.		
 		'''
 		i=i+1
-		ust.place(quote)
+		ust.place(quote,self.type_token(quote))
 		token=""
 		while line[i]!=quote:
 			token=token+line[i]
 			i+=1;
-		ust.place(token)
+		ust.place(token,self.type_token(token))
 		token=""
-		ust.place(quote)
+		ust.place(quote,self.type_token(quote))
 		return i
+
+	def type_token(self,token):
+		for i in self.trm_table:
+			if token==i.token:
+				#print i.token
+				return type_table['trm']		
+		if token.isdigit():
+			return type_table['lit']
+		else:
+			return type_table['ide']
 
 	def generate(self,lines):
 		'''lines must contain an ending \n char.'''
@@ -159,27 +168,28 @@ class Parser:
 			while i<n:
 				if line[i]=="#":
 					if len(token)!=0:
-						ust.place(token)
+						ust.place(token,self.type_token(token))
 						token=""
 					break
 				elif line[i]=="'":
 					if len(token)!=0:
-						ust.place(token)
+						ust.place(token,self.type_token(token))
 						token=""
 					i=self.handle_string("'",line,i,ust)	# handle_string has to keep in mind to place the quotes in UST.
 				elif line[i]=='"':
 					if len(token)!=0:
-						ust.place(token)
+						ust.place(token,self.type_token(token))
 						token=""
 					i=self.handle_string('"',line,i,ust)
 				elif line[i] in self.bchar:
 					if len(token)!=0:
-						ust.place(token)
+						ust.place(token,self.type_token(token))
 						token=""
-					ust.place(line[i])
+					ust.place(line[i],self.type_token(line[i]))
 				else:
 					token=token+line[i]
 				i+=1
+		return ust
 
 	def generate_file(self,f_name):
 		f=open(f_name,"r")
