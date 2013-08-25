@@ -57,6 +57,17 @@ class Table:
 
 		return tk
 
+	def export(self,f_name):
+		f=open(f_name,'w')
+		CP.dump(self,f)
+		f.close()
+
+	def load(self,f_name):
+		f=open(f_name,'r')
+		tb=CP.load(f)
+		f.close()
+		return tb
+
 # Terminal Table
 class TerminalTable:
 	def __init__(self):
@@ -140,6 +151,17 @@ class UniformSymbolTable:
 		# At present token is stored as a string but it has to be a token object. For that we have to find the type of the token.
 		u=USTElement(self.top,token,type)	
 		self.table.append(u)
+
+	def export(self,f_name):
+		f=open(f_name,'w')
+		CP.dump(self,f)
+		f.close()
+
+	def load(self,f_name):
+		f=open(f_name,'r')
+		tb=CP.load(f)
+		f.close()
+		return tb
 
 	def __str__(self):
 		for i in self.table:
@@ -254,10 +276,15 @@ if __name__=='__main__':
 
 	#Generating the UST
 	ust=p.generate_file(sys.argv[1])
+	#ust=UniformSymbolTable()	
+	#ust=ust.load('ust.cpkl')
 
 	# Printing UST
 	print "Uniform Symbol Table:",ust
+	#ust.export('ust.cpkl')
 
+	#lit=lit.load('lit.cpkl')
 	print "Literal Table:",lit
 
+	#ide=ide.load('ide.cpkl')
 	print "Identifier Table",ide
