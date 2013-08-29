@@ -195,9 +195,9 @@ class Parser:
 		while line[i]!=quote:
 			token=token+line[i]
 			i+=1;
-		self.place(token)
+		self.place(token,type_table['lit'])
 		token=""
-		self.place(quote)
+		self.place(quote,type_table['lit'])
 		return i
 
 	def type_token(self,token):
@@ -210,14 +210,18 @@ class Parser:
 		else:
 			return type_table['ide']
 
-	def place(self,token):
-		ty=self.type_token(token)
-		if ty==type_table['trm']:
-			token_obj=self.trm.find(token)
-		elif ty==type_table['lit']:
-			token_obj=self.lit.place(token)
+	def place(self,token,type=None):
+		if type==None:
+			ty=self.type_token(token)
+			if ty==type_table['trm']:
+				token_obj=self.trm.find(token)
+			elif ty==type_table['lit']:
+				token_obj=self.lit.place(token)
+			else:
+				token_obj=self.ide.place(token)
 		else:
-			token_obj=self.ide.place(token)
+			token_obj=self.lit.place(token)
+			ty=type
 		self.ust.place(token_obj,ty)
 
 	def generate(self,lines):
