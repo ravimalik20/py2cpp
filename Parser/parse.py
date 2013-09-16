@@ -285,7 +285,7 @@ if __name__=='__main__':
 
 	# Printing UST
 	print "Uniform Symbol Table:",ust
-	#ust.export('ust.cpkl')
+	ust.export('ust.cpkl')
 
 	#lit=lit.load('lit.cpkl')
 	print "Literal Table:",lit
