@@ -8,5 +8,7 @@ to implement
 incomplete/
 a.out
 *.o
+*.pyc
+ust.cpkl
 to implement
 >>>>>>> IDEA
