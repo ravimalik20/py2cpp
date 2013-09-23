@@ -3,6 +3,18 @@
 import cPickle as cp
 from parse import *
 
+class Statement:
+	stat_type={}
+
+	def __init__(self,stat):
+		self.statement=stat[:]
+		self.type=-1
+
+	def __str__(self):
+		for i in self.statement:
+			print i
+		return ""
+
 class SyntaxAnalyzer:
 	def __init__(self):
 		self.statements=[]
@@ -13,7 +25,7 @@ class SyntaxAnalyzer:
 		for i in ust.table:
 			if i.token.token in self.bchar:
 				if len(stat)!=0:
-					self.statements.append(stat)
+					self.statements.append(Statement(stat))
 					stat=[]
 			else:
 				stat.append(i)
@@ -21,8 +33,7 @@ class SyntaxAnalyzer:
 	def show(self):
 		for i in self.statements:
 			print "Statement"
-			for j in i:
-				print j
+			print i
 
 if __name__=='__main__':
 	f=open('ust.cpkl')
