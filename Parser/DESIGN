@@ -1,3 +1,5 @@
+PARSING
+
 Type Dictionary:
 	1. Terminal : 1
 	2. Literal : 2
@@ -24,3 +26,24 @@ Uniform Symbol Table
 Role of the Parser:
 	1. Identify the tokens.
 	2. Place them into their respective tables and mark their reference into the UST.
+
+SYNTAX ANALYSIS
+
+Types of Statements:
+	Declarative:
+		integer
+		float
+		string
+	Print
+	Arithmetic (containing calls to objects and functions too)
+	Decision Making:
+		if
+	Looping:
+		while
+		for
+	Function Declaration
+	List Object Declaration
+	Tupple Object declaration
+	Dictionary Object Declaration
+	Class Declaration
+	Exceptions
