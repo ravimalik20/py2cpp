@@ -34,6 +34,7 @@ class SyntaxAnalyzer:
 		for i in self.statements:
 			print "Statement"
 			print i
+				
 
 if __name__=='__main__':
 	f=open('ust.cpkl')
