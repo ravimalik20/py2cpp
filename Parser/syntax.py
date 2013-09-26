@@ -34,17 +34,4 @@ class SyntaxAnalyzer:
 		for i in self.statements:
 			print "Statement"
 			print i
-				
 
-if __name__=='__main__':
-	f=open('ust.cpkl')
-
-	ust=cp.load(f)
-
-	f.close()
-
-	sa=SyntaxAnalyzer()
-
-	sa.parse_statements(ust)
-	
-	sa.show()

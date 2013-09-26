@@ -262,33 +262,4 @@ class Parser:
 		lines=f.readlines()
 
 		return self.generate(lines)
-	
-if __name__=='__main__':
-	# Generated all the three variables.
-	trm=TerminalTable()
-	lit=LiteralTable()
-	ide=IdentifierTable()
 
-	# Initialising the terminal Table.
-	trm.generate('terminals.cpkl')
-
-	# print the generated terminal table.
-	print "Terminal Table",trm
-
-	# Instantiating the parser.
-	p=Parser(trm,lit,ide)
-
-	#Generating the UST
-	ust=p.generate_file(sys.argv[1])
-	#ust=UniformSymbolTable()	
-	#ust=ust.load('ust.cpkl')
-
-	# Printing UST
-	print "Uniform Symbol Table:",ust
-	ust.export('ust.cpkl')
-
-	#lit=lit.load('lit.cpkl')
-	print "Literal Table:",lit
-
-	#ide=ide.load('ide.cpkl')
-	print "Identifier Table",ide
