@@ -37,22 +37,22 @@ import cPickle as CP
 import sys
 
 class Token:
-	def __init__(self,id,token):
-		self.token=token
+	def __init__(self,id,name):
+		self.name=name
 		self.id=id
 
 	def __str__(self):
-		return "[%d:%s]"%(self.id,self.token)
+		return "[%d:%s]"%(self.id,self.name)
 
 class Table:
 	def __init__(self):
 		self.table=[]
 		self.top=-1
 
-	def place(self,token):
+	def place(self,token_name):
 		# Generate space for the token in the table.
 		self.top+=1
-		tk=Token(self.top,token)
+		tk=Token(self.top,token_name)
 		self.table.append(tk)
 
 		return tk
@@ -67,6 +67,11 @@ class Table:
 		tb=CP.load(f)
 		f.close()
 		return tb
+
+	def __str__(self):
+		for i in self.table:
+			print i
+		return ""
 
 # Terminal Table
 class TerminalTable:
@@ -91,9 +96,9 @@ class TerminalTable:
 
 			print "Terminal Table generated from file %s!!"%f_name
 
-	def find(self,token):
-		for i in self.table:
-			if i.token==token:
+	def find(self,token_name):
+		for i in self.table: 
+			if i.name==token_name:
 				return i
 		return None
 
@@ -102,7 +107,6 @@ class TerminalTable:
 			print i
 		return ""
 
-
 # Identifier Table
 class IdentifierTable(Table):
 	def __init__(self):
@@ -110,10 +114,7 @@ class IdentifierTable(Table):
 		#super(TerminalTable,self).__init__()
 		Table.__init__(self)
 
-	def __str__(self):
-		for i in self.table:
-			print i
-		return ""
+	
 
 # Literal Table
 class LiteralTable(Table):
@@ -122,10 +123,6 @@ class LiteralTable(Table):
 		#super(TerminalTable,self).__init__()
 		Table.__init__(self)
 
-	def __str__(self):
-		for i in self.table:
-			print i
-		return ""
 
 type_table={'trm':1,'lit':2,'ide':3,1:'trm',2:'lit',3:'ide'}
 
@@ -185,42 +182,42 @@ class Parser:
 			'\t',
 		] 
 
-	def handle_string(self,quote,line,i,ust):
+	def __handle_string(self,quote,line,i,ust):
 		'''Handles the extraction of a string literal from the given line.
 		It returns the value of the counter of the line.		
 		'''
 		i=i+1
-		self.place(quote)
+		self.__place(quote)
 		token=""
 		while line[i]!=quote:
 			token=token+line[i]
 			i+=1;
-		self.place(token,type_table['lit'])
+		self.__place(token,type_table['lit'])
 		token=""
-		self.place(quote,type_table['lit'])
+		self.__place(quote,type_table['lit'])
 		return i
 
-	def type_token(self,token):
+	def __type_token(self,token_name):
 		for i in self.trm_table:
-			if token==i.token:
+			if token_name==i.name:
 				#print i.token
 				return type_table['trm']		
-		if token.isdigit():
+		if token_name.isdigit():
 			return type_table['lit']
 		else:
 			return type_table['ide']
 
-	def place(self,token,type=None):
+	def __place(self,token_name,type=None):
 		if type==None:
-			ty=self.type_token(token)
+			ty=self.__type_token(token_name)
 			if ty==type_table['trm']:
-				token_obj=self.trm.find(token)
+				token_obj=self.trm.find(token_name)
 			elif ty==type_table['lit']:
-				token_obj=self.lit.place(token)
+				token_obj=self.lit.place(token_name)
 			else:
-				token_obj=self.ide.place(token)
+				token_obj=self.ide.place(token_name)
 		else:
-			token_obj=self.lit.place(token)
+			token_obj=self.lit.place(token_name)
 			ty=type
 		self.ust.place(token_obj,ty)
 
@@ -234,24 +231,24 @@ class Parser:
 			while i<n:
 				if line[i]=="#":
 					if len(token)!=0:
-						self.place(token)
+						self.__place(token)
 						token=""
 					break
 				elif line[i]=="'":
 					if len(token)!=0:
-						self.place(token)
+						self.__place(token)
 						token=""
-					i=self.handle_string("'",line,i,self.ust)	# handle_string has to keep in mind to place the quotes in UST.
+					i=self.__handle_string("'",line,i,self.ust)	# handle_string has to keep in mind to place the quotes in UST.
 				elif line[i]=='"':
 					if len(token)!=0:
-						self.place(token)
+						self.__place(token)
 						token=""
-					i=self.handle_string('"',line,i,self.ust)
+					i=self.__handle_string('"',line,i,self.ust)
 				elif line[i] in self.bchar:
 					if len(token)!=0:
-						self.place(token)
+						self.__place(token)
 						token=""
-					self.place(line[i])
+					self.__place(line[i])
 				else:
 					token=token+line[i]
 				i+=1

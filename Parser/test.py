@@ -41,3 +41,10 @@ SA.parse_statements(ust)
 
 # Printing the statements identified.
 SA.show()
+
+# Pre-Processing the statements
+print "After Pre-Processing:"
+SA.pre_process_statements()
+
+# Printing the now processed stataments
+SA.show()
