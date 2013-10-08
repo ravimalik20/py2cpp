@@ -6,3 +6,4 @@ incomplete/
 *.pyc
 ust.cpkl
 hello.py
+Parser/hello.py
