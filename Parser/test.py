@@ -48,3 +48,10 @@ SA.pre_process_statements()
 
 # Printing the now processed stataments
 SA.show()
+
+# Identifying types of statements
+SA.classify()
+
+# Printing the now processed stataments
+print "After classifying statements:"
+SA.show()
