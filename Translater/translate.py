@@ -87,4 +87,40 @@ class Translator:
 
 	def show_grammer(self):
 		self.grammer.show()
-		
+
+	def translate_if(self,statement):
+		if statement[0].name!="if":
+			print "Not an if statement!!"
+		else:
+			condition=""
+			a=1
+			while statement[a].name!=":":
+				condition+=statement[a].name
+				a+=1
+			# import grammer into a temp location
+			if_grammer=self.grammer.if_
+			# find the index of the condition place holder
+			i=if_grammer.index("<condition>")
+			# fill in the place holder
+			if_grammer[i]=condition
+
+			stat=""
+			for i in if_grammer:
+				stat+=i
+
+			return stat
+
+	def __translate_else(self,statement):
+		pass
+
+	def __translate_loop_while(self,statement):
+		pass
+
+	def __translate_loop_for(self,statement):
+		pass
+
+	def __translate_declaration_function(self,statement):
+		pass
+
+	def __translate_declaration_class(self,statement):
+		pass

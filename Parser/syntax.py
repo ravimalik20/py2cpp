@@ -38,6 +38,9 @@ class Statement:
 			print i
 		return ""
 
+	def __getitem__(self,index):
+		return self.statement[index]
+
 class SyntaxAnalyzer:
 	def __init__(self):
 		self.statements=[]
