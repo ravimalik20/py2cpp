@@ -124,8 +124,31 @@ class Translator:
 
 			return stat
 
-	def __translate_loop_while(self,statement):
-		pass
+	def translate_loop_while(self,statement):
+		if statement[0].name!="while":
+			print "Not a while statement!!"
+		else:
+			# importing loop_while grammer
+			loop_while_grammer=self.grammer.loop_while
+			# extracting condition out of python statement
+			condition=""
+			a=1
+			while statement[a].name!=":":
+				condition+=statement[a].name
+				a+=1
+
+			# fetching the index of condition in grammer
+			i=loop_while_grammer.index("<condition>")
+
+			# filling in the place holder
+			loop_while_grammer[i]=condition
+
+			# Converting processed grammer to actual statement
+			stat=""
+			for i in loop_while_grammer:
+				stat+=i
+
+			return stat
 
 	def __translate_loop_for(self,statement):
 		pass

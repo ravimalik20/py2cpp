@@ -39,3 +39,9 @@ s=[Token(0,'else'),Token(0,':')]
 stat=Statement(s)
 
 print t.translate_else(stat)
+
+s=[Token(0,'while'),Token(0,'a'),Token(0,'<'),Token(0,'b'),Token(0,'and'),Token(0,'c'),Token(0,'>'),Token(0,'d'),Token(0,':')]
+
+stat=Statement(s)
+
+print t.translate_loop_while(stat)
