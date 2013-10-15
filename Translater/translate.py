@@ -156,5 +156,29 @@ class Translator:
 	def __translate_declaration_function(self,statement):
 		pass
 
-	def __translate_declaration_class(self,statement):
-		pass
+	def translate_declaration_class(self,statement):
+		if statement[0].name!="class":
+			print "Not a class declaration statement!!"
+		else:
+			# importing declaration_class grammer
+			declaration_class_grammer=self.grammer.declaration_class
+
+			# extracting class_name from the statement
+			class_name=""
+			a=1
+			while statement[a].name!=":":
+				class_name+=statement[a].name
+				a+=1
+
+			# fetching index of the class_name placeholder in grammer
+			i=declaration_class_grammer.index("<class_name>")
+
+			# filling the placeholder
+			declaration_class_grammer[i]=class_name
+
+			# converting processed grammer to string
+			stat=""
+			for i in declaration_class_grammer:
+				stat+=i
+
+			return stat

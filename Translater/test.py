@@ -45,3 +45,9 @@ s=[Token(0,'while'),Token(0,'a'),Token(0,'<'),Token(0,'b'),Token(0,'and'),Token(
 stat=Statement(s)
 
 print t.translate_loop_while(stat)
+
+s=[Token(0,'class'),Token(0,'hello_world'),Token(0,':')]
+
+stat=Statement(s)
+
+print t.translate_declaration_class(stat)
