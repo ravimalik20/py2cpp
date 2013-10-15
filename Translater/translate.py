@@ -110,8 +110,19 @@ class Translator:
 
 			return stat
 
-	def __translate_else(self,statement):
-		pass
+	def translate_else(self,statement):
+		if statement[0].name!="else":
+			print "Not an else statement!!"
+		else:
+			# import grammer into a temp location
+			else_grammer=self.grammer.else_
+			
+			stat=""
+			# generating string out of the processed grammer
+			for i in else_grammer:
+				stat+=i
+
+			return stat
 
 	def __translate_loop_while(self,statement):
 		pass

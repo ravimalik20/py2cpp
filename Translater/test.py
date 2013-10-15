@@ -33,3 +33,9 @@ stat=Statement(s)
 print stat
 
 print t.translate_if(stat)
+
+s=[Token(0,'else'),Token(0,':')]
+
+stat=Statement(s)
+
+print t.translate_else(stat)
