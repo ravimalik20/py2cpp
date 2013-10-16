@@ -86,7 +86,7 @@ class SyntaxAnalyzer:
 			if self.statements[a].statement[b].token.name=='if':
 				self.statements[a].type=stat_type['if']
 			elif self.statements[a].statement[b].token.name=='else':
-				self.statement[a].type=stat_type['else']
+				self.statements[a].type=stat_type['else']
 			elif self.statements[a].statement[b].token.name=='for':
 				self.statements[a].type=stat_type['loop_for']
 			elif self.statements[a].statement[b].token.name=='while':

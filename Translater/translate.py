@@ -1,6 +1,30 @@
 # Translator:
 # Receives list of statement objects and outputs the list of string objects
 
+stat_type={
+	-1:None,
+	1:'if',
+	2:'else',
+	3:'loop_while',
+	4:'loop_for',
+	5:'declaration_function',
+	6:'declaration_list',
+	7:'declaration_tupple',
+	8:'declaration_dictionary',
+	9:'declaration_class',
+	10:'standard_output',
+	'if':1,
+	'else':2,
+	'loop_while':3,
+	'loop_for':4,
+	'declaration_function':5,
+	'declaration_list':6,
+	'declaration_tupple':7,
+	'declaration_dictionary':8,
+	'declaration_class':9,
+	'standard_output':10,
+}
+
 class Grammer:
 	def __init__(self):
 		self.if_=[]
@@ -89,13 +113,13 @@ class Translator:
 		self.grammer.show()
 
 	def translate_if(self,statement):
-		if statement[0].name!="if":
+		if statement[0].token.name!="if":
 			print "Not an if statement!!"
 		else:
 			condition=""
 			a=1
-			while statement[a].name!=":":
-				condition+=statement[a].name
+			while statement[a].token.name!=":":
+				condition+=statement[a].token.name
 				a+=1
 			# import grammer into a temp location
 			if_grammer=self.grammer.if_
@@ -111,7 +135,7 @@ class Translator:
 			return stat
 
 	def translate_else(self,statement):
-		if statement[0].name!="else":
+		if statement[0].token.name!="else":
 			print "Not an else statement!!"
 		else:
 			# import grammer into a temp location
@@ -125,7 +149,7 @@ class Translator:
 			return stat
 
 	def translate_loop_while(self,statement):
-		if statement[0].name!="while":
+		if statement[0].token.name!="while":
 			print "Not a while statement!!"
 		else:
 			# importing loop_while grammer
@@ -133,8 +157,8 @@ class Translator:
 			# extracting condition out of python statement
 			condition=""
 			a=1
-			while statement[a].name!=":":
-				condition+=statement[a].name
+			while statement[a].token.name!=":":
+				condition+=statement[a].token.name
 				a+=1
 
 			# fetching the index of condition in grammer
@@ -157,7 +181,7 @@ class Translator:
 		pass
 
 	def translate_declaration_class(self,statement):
-		if statement[0].name!="class":
+		if statement[0].token.name!="class":
 			print "Not a class declaration statement!!"
 		else:
 			# importing declaration_class grammer
@@ -166,8 +190,8 @@ class Translator:
 			# extracting class_name from the statement
 			class_name=""
 			a=1
-			while statement[a].name!=":":
-				class_name+=statement[a].name
+			while statement[a].token.name!=":":
+				class_name+=statement[a].token.name
 				a+=1
 
 			# fetching index of the class_name placeholder in grammer
@@ -182,3 +206,20 @@ class Translator:
 				stat+=i
 
 			return stat
+
+	def translate(self,statements):
+		output=[]
+		out=""
+		for i in statements:
+			out=""
+			if i.type==stat_type['if']:
+				out=self.translate_if(i)
+			elif i.type==stat_type['else']:
+				out=self.translate_else(i)
+			elif i.type==stat_type['loop_while']:
+				out=self.translate_loop_while(i)
+			elif i.type==stat_type['declaration_class']:
+				out=self.translate_declaration_class(i)
+			output.append(out)
+
+		return output
