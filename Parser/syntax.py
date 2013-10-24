@@ -74,11 +74,44 @@ class SyntaxAnalyzer:
 				else:
 					j+=1
 
+		'''Indentifying the starting and ending of a block'''
+		n=len(self.statements)
+		a=0
+		indentation_prev=0
+		indentation=0
+		while a<n:
+			l=0
+			while self.statements[a].statement[l].token.name=="\t":
+				l+=1
+			print "l:%d"%l
+			if l>indentation:
+				print 1
+				# Insert Statement marking start of block
+				self.statements.insert(a,'BLOCK_START')
+				a+=1
+				n+=1
+				indentation_prev=indentation
+				indentation=l
+			elif l<indentation:
+				print 2
+				# Insert Statement marking start of block
+				self.statements.insert(a-1,'BLOCK_END')
+				a+=1
+				n+=1
+				indentation_prev=indentation
+				indentation=l
+
+			a+=1
+
 	def classify(self):
 		'''Classify the statements into different types'''
 		a=0
 		while a<len(self.statements):
 			b=0
+			# Skipping start and end block statements
+			if self.statements[a]=="BLOCK_START" or self.statements[a]=="BLOCK_END":
+				a+=1
+				continue
 			# Skipping to first non space charachter
 			while self.statements[a].statement[b].token.name==' ' or self.statements[a].statement[b].token.name=='\t':
 				b+=1

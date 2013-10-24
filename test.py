@@ -28,6 +28,8 @@ translator=translate.Translator()
 # Generating UST
 ust=parser.generate_file(f_name)
 
+print ust
+
 # doing syntax analysis
 syntax_analyzer.parse_statements(ust)
 

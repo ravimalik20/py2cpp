@@ -212,7 +212,11 @@ class Translator:
 		out=""
 		for i in statements:
 			out=""
-			if i.type==stat_type['if']:
+			if i=='BLOCK_START':
+				out="{"
+			elif i=='BLOCK_END':
+				out="}"
+			elif i.type==stat_type['if']:
 				out=self.translate_if(i)
 			elif i.type==stat_type['else']:
 				out=self.translate_else(i)

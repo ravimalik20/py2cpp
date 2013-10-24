@@ -4,11 +4,14 @@ b=20
 
 if a>b:
 	print "Hello World"
+	print "bla nlandcndc"
 
 else:
 	print "Gotcha!!"
+	print "bla nlandcndc"
 
 a=0
+
 while a!=10:
 	print a
 	a+=1
