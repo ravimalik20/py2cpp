@@ -288,6 +288,28 @@ class Translator:
 
 		return out
 
+	def translate_standard_output(self,statement):
+		a=0
+		while statement[a].token.name==" " or statement[a].token.name=="\t":
+			a+=1
+		if statement[a].token.name!="print":
+			print "Not a Standard Output Statement!!"
+		else:
+			stat=statement.statement[a+1:]
+			stat=self.__process_condition(Statement(stat))
+			
+			out=""
+			for i in stat:
+				if i==",":
+					out+="<<"
+				else:
+					out+=i
+
+			out="cout<<"+out
+
+			return out
+		
+
 	def translate(self,statements):
 		output=[]
 		out=""
@@ -307,6 +329,8 @@ class Translator:
 				out=self.translate_declaration_class(i)
 			elif i.type==stat_type['arithmetic']:
 				out=self.translate_arithmetic(i)
+			elif i.type==stat_type['standard_output']:
+				out=self.translate_standard_output(i)
 			output.append(out)
 
 		return output

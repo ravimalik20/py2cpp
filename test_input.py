@@ -14,6 +14,8 @@ a=0
 
 b=b+fetch(a)
 
+print b,a
+
 while a!=10:
 	print a
 	a=a+1
