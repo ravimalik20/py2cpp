@@ -79,29 +79,32 @@ class SyntaxAnalyzer:
 		'''Indentifying the starting and ending of a block'''
 		n=len(self.statements)
 		a=0
-		indentation_prev=0
-		indentation=0
+		indentation=[0,]
+		i_t=0
+		#indentation=0
 		while a<n:
 			l=0
 			while self.statements[a].statement[l].token.name=="\t":
 				l+=1
-			print "l:%d"%l
-			if l>indentation:
+			print "l:",l,"indentation:",indentation
+			if l>indentation[i_t]:
 				print 1
 				# Insert Statement marking start of block
 				self.statements.insert(a,'BLOCK_START')
 				a+=1
 				n+=1
-				indentation_prev=indentation
-				indentation=l
-			elif l<indentation:
+				indentation.append(l)
+				i_t+=1
+				#indentation=l
+			elif l<indentation[len(indentation)-1]:
 				print 2
 				# Insert Statement marking start of block
-				self.statements.insert(a-1,'BLOCK_END')
-				a+=1
-				n+=1
-				indentation_prev=indentation
-				indentation=l
+				while indentation[i_t]>l:
+					self.statements.insert(a,'BLOCK_END')
+					a+=1
+					n+=1
+					indentation.pop()
+					i_t-=1
 
 			a+=1
 
