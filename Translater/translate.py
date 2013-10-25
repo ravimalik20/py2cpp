@@ -29,6 +29,20 @@ stat_type={
 
 type_table={'trm':1,'lit':2,'ide':3,1:'trm',2:'lit',3:'ide'}
 
+class Statement:
+
+	def __init__(self,stat):
+		self.statement=stat[:]
+		self.type=-1
+
+	def __str__(self):
+		for i in self.statement:
+			print i
+		return ""
+
+	def __getitem__(self,index):
+		return self.statement[index]
+
 class Grammer:
 	def __init__(self):
 		self.if_=[]
@@ -117,15 +131,24 @@ class Translator:
 	def show_grammer(self):
 		self.grammer.show()
 
+	def __process_condition(self,condition):
+		condition=self.translate_arithmetic(Statement(condition))
+		return condition
+
 	def translate_if(self,statement):
 		if statement[0].token.name!="if":
 			print "Not an if statement!!"
 		else:
 			condition=""
+			cond=[]
 			a=1
 			while statement[a].token.name!=":":
-				condition+=statement[a].token.name
+				#condition+=statement[a].token.name
+				cond.append(statement[a])
 				a+=1
+			# Process condition
+			condition=self.__process_condition(cond)[:-1]
+
 			# import grammer into a temp location
 			if_grammer=self.grammer.if_
 			# find the index of the condition place holder
@@ -160,11 +183,15 @@ class Translator:
 			# importing loop_while grammer
 			loop_while_grammer=self.grammer.loop_while
 			# extracting condition out of python statement
+			cond=[]
 			condition=""
 			a=1
 			while statement[a].token.name!=":":
 				condition+=statement[a].token.name
+				cond.append(statement[a])
 				a+=1
+			# Process condition
+			condition=self.__process_condition(cond)[:-1]
 
 			# fetching the index of condition in grammer
 			i=loop_while_grammer.index("<condition>")
@@ -222,18 +249,26 @@ class Translator:
 
 		while a<n:
 			if statement[a].type==type_table['ide']:
-				if statement[a+1].token.name=="=":
-					if statement[a].token.name in self.__arithmetic_ide_table:
-						pass
+				try:
+					if statement[a+1].token.name=="=":
+						if statement[a].token.name in self.__arithmetic_ide_table:
+							pass
+						else:
+							declarations+="\nVar %s;\n"%statement[a].token.name
+							self.__arithmetic_ide_table.append(statement[a].token.name)
+						stat+="%s.put("%statement[a].token.name
+						assign=1
+						a+=1
+					elif statement[a+1].token.name=="(":
+						stat+=statement[a].token.name
 					else:
-						declarations+="\nVar %s;\n"%statement[a].token.name
-						self.__arithmetic_ide_table.append(statement[a].token.name)
-					stat+="%s.put("%statement[a].token.name
-					assign=1
-					a+=1
-				elif statement[a+1].token.name=="(":
-					stat+=statement[a].token.name
-				else:
+						if statement[a].token.name in self.__arithmetic_ide_table:
+							pass
+						else:
+							declarations+="\nVar %s;\n"%statement[a].token.name
+							self.__arithmetic_ide_table.append(statement[a].token.name)
+						stat+="GET(%s)"%statement[a].token.name
+				except IndexError:
 					if statement[a].token.name in self.__arithmetic_ide_table:
 						pass
 					else:
