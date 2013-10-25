@@ -13,6 +13,7 @@ stat_type={
 	8:'declaration_dictionary',
 	9:'declaration_class',
 	10:'standard_output',
+	11:'arithmetic',
 	'if':1,
 	'else':2,
 	'loop_while':3,
@@ -23,7 +24,10 @@ stat_type={
 	'declaration_dictionary':8,
 	'declaration_class':9,
 	'standard_output':10,
+	'arithmetic':11,
 }
+
+type_table={'trm':1,'lit':2,'ide':3,1:'trm',2:'lit',3:'ide'}
 
 class Grammer:
 	def __init__(self):
@@ -108,6 +112,7 @@ class Translator:
 	def __init__(self):
 		self.grammer=Grammer()
 		self.grammer.generate('output_grammer')
+		self.__arithmetic_ide_table=[]
 
 	def show_grammer(self):
 		self.grammer.show()
@@ -207,6 +212,47 @@ class Translator:
 
 			return stat
 
+	def translate_arithmetic(self,statement):
+		declarations=""
+		stat=""
+		# flag showing if the current statement has an assignment or not
+		assign=0
+		a=0
+		n=len(statement.statement)
+
+		while a<n:
+			if statement[a].type==type_table['ide']:
+				if statement[a+1].token.name=="=":
+					if statement[a].token.name in self.__arithmetic_ide_table:
+						pass
+					else:
+						declarations+="\nVar %s;\n"%statement[a].token.name
+						self.__arithmetic_ide_table.append(statement[a].token.name)
+					stat+="%s.put("%statement[a].token.name
+					assign=1
+					a+=1
+				elif statement[a+1].token.name=="(":
+					stat+=statement[a].token.name
+				else:
+					if statement[a].token.name in self.__arithmetic_ide_table:
+						pass
+					else:
+						declarations+="\nVar %s;\n"%statement[a].token.name
+						self.__arithmetic_ide_table.append(statement[a].token.name)
+					stat+="GET(%s)"%statement[a].token.name
+			else:
+				stat+=statement[a].token.name
+
+			a+=1
+
+		out=declarations+stat
+		if assign==1:
+			out+=");"
+		else:
+			out+=";"
+
+		return out
+
 	def translate(self,statements):
 		output=[]
 		out=""
@@ -224,6 +270,8 @@ class Translator:
 				out=self.translate_loop_while(i)
 			elif i.type==stat_type['declaration_class']:
 				out=self.translate_declaration_class(i)
+			elif i.type==stat_type['arithmetic']:
+				out=self.translate_arithmetic(i)
 			output.append(out)
 
 		return output

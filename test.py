@@ -37,6 +37,8 @@ syntax_analyzer.pre_process_statements()
 
 syntax_analyzer.classify()
 
+syntax_analyzer.show()
+
 # Translating statements
 output=translator.translate(syntax_analyzer.statements)
 

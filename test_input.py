@@ -12,9 +12,11 @@ else:
 
 a=0
 
+b=b+fetch(a)
+
 while a!=10:
 	print a
-	a+=1
+	a=a+1
 
 class hello_world:
 	def __init__(self):

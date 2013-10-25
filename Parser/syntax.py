@@ -15,6 +15,7 @@ stat_type={
 	8:'declaration_dictionary',
 	9:'declaration_class',
 	10:'standard_output',
+	11:'arithmetic',
 	'if':1,
 	'else':2,
 	'loop_while':3,
@@ -25,6 +26,7 @@ stat_type={
 	'declaration_dictionary':8,
 	'declaration_class':9,
 	'standard_output':10,
+	'arithmetic':11,
 }
 
 class Statement:
@@ -130,10 +132,16 @@ class SyntaxAnalyzer:
 				self.statements[a].type=stat_type['declaration_class']
 			elif self.statements[a].statement[b].token.name=='print':
 				self.statements[a].type=stat_type['standard_output']
+			else:
+				self.statements[a].type=stat_type['arithmetic']
 			a+=1
+
 	def show(self):
 		for i in self.statements:
-			print "Statement"
-			print "Type:",stat_type[i.type]
-			print i
+			if type(i)==type("str"):
+				print i
+			else:
+				print "Statement"
+				print "Type:",stat_type[i.type]
+				print i
 
