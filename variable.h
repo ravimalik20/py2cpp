@@ -45,14 +45,4 @@ class Var
 		}
 };
 
-int main(void)
-{	Var v;
 
-	int a=25;
-
-	v.put(12);
-	
-	cout<<GET(v)<<"\n";
-
-	return 0;
-}
