@@ -1,0 +1,49 @@
+PARSING
+
+Type Dictionary:
+	1. Terminal : 1
+	2. Literal : 2
+	3. Identifier : 3
+
+Terminal Table:
+	1. Id
+	2. Token
+
+Literal Table:
+	1. Id
+	2. Token
+
+Identifier Table:
+	1. Id
+	2. Token
+
+Uniform Symbol Table
+
+	1. Token Reference: int [Reference to the token placed in one of the three tables.]
+	2. Type : int [Reference to the type dictionary to decide what kind of token is placed, 
+			and also to decide which table to query while taking the token reference.]
+
+Role of the Parser:
+	1. Identify the tokens.
+	2. Place them into their respective tables and mark their reference into the UST.
+
+SYNTAX ANALYSIS
+
+Types of Statements:
+	Declarative:
+		integer
+		float
+		string
+	Print
+	Arithmetic (containing calls to objects and functions too)
+	Decision Making:
+		if
+	Looping:
+		while
+		for
+	Function Declaration
+	List Object Declaration
+	Tupple Object declaration
+	Dictionary Object Declaration
+	Class Declaration
+	Exceptions
