@@ -1,5 +1,5 @@
-from Parser import parse,syntax
-from Translater import translate
+import parse,syntax
+import translate
 
 import sys
 
@@ -10,7 +10,7 @@ if len(sys.argv)<2:
 f_name=sys.argv[1]
 
 trm_table=parse.TerminalTable()
-trm_table.generate("Parser/terminals.cpkl")
+trm_table.generate("terminals.cpkl")
 
 ide_table=parse.IdentifierTable()
 
@@ -28,7 +28,7 @@ translator=translate.Translator()
 # Generating UST
 ust=parser.generate_file(f_name)
 
-print ust
+#print ust
 
 # doing syntax analysis
 syntax_analyzer.parse_statements(ust)
@@ -36,8 +36,6 @@ syntax_analyzer.parse_statements(ust)
 syntax_analyzer.pre_process_statements()
 
 syntax_analyzer.classify()
-
-syntax_analyzer.show()
 
 # Translating statements
 output=translator.translate(syntax_analyzer.statements)
