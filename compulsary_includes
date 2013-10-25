@@ -1,0 +1,4 @@
+#include<variable.h>
+#include<raw_input.h>
+#define and &&
+#define or ||

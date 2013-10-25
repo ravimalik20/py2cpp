@@ -259,4 +259,3 @@ class Parser:
 		lines=f.readlines()
 
 		return self.generate(lines)
-

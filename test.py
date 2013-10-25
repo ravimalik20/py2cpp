@@ -3,11 +3,14 @@ import translate
 
 import sys
 
-if len(sys.argv)<2:
-	print "File name to be converted not provided."
+if len(sys.argv)<3:
+	print "File names not provided."
 	sys.exit()
 
-f_name=sys.argv[1]
+f_name_input=sys.argv[1]
+f_name_output=sys.argv[2]
+
+#################### Parser #########################
 
 trm_table=parse.TerminalTable()
 trm_table.generate("terminals.cpkl")
@@ -19,26 +22,41 @@ lit_table=parse.LiteralTable()
 # Declaring parser instance
 parser=parse.Parser(trm_table,ide_table,lit_table)
 
+ust=parser.generate_file(f_name_input)
+
+#################### Parser #########################
+
+###################### Syntax Analyzer ######################
+
 # Declaring syntax analyzer
 syntax_analyzer=syntax.SyntaxAnalyzer()
 
-# Declaring translator
-translator=translate.Translator()
-
-# Generating UST
-ust=parser.generate_file(f_name)
-
-#print ust
-
-# doing syntax analysis
 syntax_analyzer.parse_statements(ust)
 
 syntax_analyzer.pre_process_statements()
 
 syntax_analyzer.classify()
 
-# Translating statements
+###################### Syntax Analyzer ######################
+
+######################## Translator ######################
+
+# Declaring translator
+translator=translate.Translator()
 output=translator.translate(syntax_analyzer.statements)
 
+######################## Translator ######################
+
+# Fetching Compulsary Includes
+f=open("compulsary_includes","r")
+includes=f.read()
+f.close()
+
+f=open(f_name_output,"w")
+
+f.write(includes)
+f.write("\nint main()\n{")
 for i in output:
-	print i
+	f.write(i)
+
+f.write("\nreturn 0;\n}")

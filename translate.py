@@ -295,6 +295,6 @@ class Translator:
 				out=self.translate_arithmetic(i)
 			elif i.type==stat_type['standard_output']:
 				out=self.translate_standard_output(i)
-			output.append(out)
+			output.append(out+"\n")
 
 		return output
