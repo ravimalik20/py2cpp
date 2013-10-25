@@ -14,6 +14,7 @@ stat_type={
 	9:'declaration_class',
 	10:'standard_output',
 	11:'arithmetic',
+	12:'standard_input',
 	'if':1,
 	'else':2,
 	'loop_while':3,
@@ -25,6 +26,7 @@ stat_type={
 	'declaration_class':9,
 	'standard_output':10,
 	'arithmetic':11,
+	'standard_input':12,
 }
 
 type_table={'trm':1,'lit':2,'ide':3,1:'trm',2:'lit',3:'ide'}
@@ -248,7 +250,9 @@ class Translator:
 		n=len(statement.statement)
 
 		while a<n:
-			if statement[a].type==type_table['ide']:
+			if statement[a].token.name=="int" or statement[a].token.name=="float":
+				stat+="(%s)"%statement[a].token.name
+			elif statement[a].type==type_table['ide']:
 				try:
 					if statement[a+1].token.name=="=":
 						if statement[a].token.name in self.__arithmetic_ide_table:
@@ -308,7 +312,6 @@ class Translator:
 			out="cout<<"+out
 
 			return out
-		
 
 	def translate(self,statements):
 		output=[]

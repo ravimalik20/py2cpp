@@ -2,6 +2,8 @@ a=10
 
 b=20
 
+c=int(raw_input("Hello World"))
+
 if a>b:
 	print "Hello World"
 	print "bla nlandcndc"
