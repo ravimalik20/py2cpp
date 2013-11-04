@@ -226,6 +226,9 @@ class Translator:
 						a+=1
 					elif statement[a+1].token.name=="(":
 						stat+=statement[a].token.name
+					elif statement[a+1].token.name=="%":
+						stat+="fmod(GET(%s),GET(%s))"%(statement[a].token.name,statement[a+2].token.name)
+						a+=2
 					else:
 						if statement[a].token.name in self.__arithmetic_ide_table:
 							pass
@@ -241,7 +244,7 @@ class Translator:
 						self.__arithmetic_ide_table.append(statement[a].token.name)
 					stat+="GET(%s)"%statement[a].token.name
 			else:
-				stat+=statement[a].token.name
+				stat+=" %s "%statement[a].token.name
 
 			a+=1
 

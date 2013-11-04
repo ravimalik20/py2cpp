@@ -1,5 +1,6 @@
 #include"variable.h"
 #include"raw_input.h"
+#include<math.h>
 int main()
 {
 Var n;
@@ -10,14 +11,15 @@ a.put(2);
 
 Var b;
 b.put(1);
-while(GET(a)*GET(a)<GET(n))
+while(GET(a)*GET(a)<=GET(n))
 {
-if(GET(n)%GET(a)==0)
+if(fmod(GET(n),GET(a))==0)
 {
 cout<<"Not Prime";
 b.put(0);
 break;
 }
+a.put(GET(a)+1);
 }
 if(GET(b)==1)
 {
