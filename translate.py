@@ -113,7 +113,7 @@ class Translator:
 			condition=self.__process_condition(cond)[:-1]
 
 			# import grammer into a temp location
-			if_grammer=self.grammer.if_
+			if_grammer=self.grammer.if_[:]
 			# find the index of the condition place holder
 			i=if_grammer.index("<condition>")
 			# fill in the place holder
@@ -130,7 +130,7 @@ class Translator:
 			print "Not an else statement!!"
 		else:
 			# import grammer into a temp location
-			else_grammer=self.grammer.else_
+			else_grammer=self.grammer.else_[:]
 			
 			stat=""
 			# generating string out of the processed grammer
@@ -144,7 +144,7 @@ class Translator:
 			print "Not a while statement!!"
 		else:
 			# importing loop_while grammer
-			loop_while_grammer=self.grammer.loop_while
+			loop_while_grammer=self.grammer.loop_while[:]
 			# extracting condition out of python statement
 			cond=[]
 			condition=""
@@ -180,7 +180,7 @@ class Translator:
 			print "Not a class declaration statement!!"
 		else:
 			# importing declaration_class grammer
-			declaration_class_grammer=self.grammer.declaration_class
+			declaration_class_grammer=self.grammer.declaration_class[:]
 
 			# extracting class_name from the statement
 			class_name=""

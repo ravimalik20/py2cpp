@@ -16,6 +16,8 @@ stat_type={
 	9:'declaration_class',
 	10:'standard_output',
 	11:'arithmetic',
+	12:'block_start',
+	13:'block_end',
 	'if':1,
 	'else':2,
 	'loop_while':3,
@@ -27,6 +29,8 @@ stat_type={
 	'declaration_class':9,
 	'standard_output':10,
 	'arithmetic':11,
+	'block_start':12,
+	'block_end':13,
 }
 
 class Statement:
@@ -58,6 +62,11 @@ class SyntaxAnalyzer:
 			else:
 				stat.append(i)
 
+	def __remove_leading_spaces(self,statement):
+		a=0
+		while statement[a].token.name=="\t" or statement[a].token.name==" ":
+			del(statement[a])
+
 	def pre_process_statements(self):
 		'''Remove the spaces from within the statements but not from the starting'''
 		for i in range(0,len(self.statements)):
@@ -81,7 +90,6 @@ class SyntaxAnalyzer:
 		a=0
 		indentation=[0,]
 		i_t=0
-		#indentation=0
 		while a<n:
 			l=0
 			while self.statements[a].statement[l].token.name=="\t":
@@ -89,7 +97,11 @@ class SyntaxAnalyzer:
 			#print "l:",l,"indentation:",indentation
 			if l>indentation[i_t]:
 				#print 1
+				# Clear the current statement of all the leading spaces
+				self.__remove_leading_spaces(self.statements[a].statement)
+				
 				# Insert Statement marking start of block
+				
 				self.statements.insert(a,'BLOCK_START')
 				a+=1
 				n+=1
@@ -100,11 +112,14 @@ class SyntaxAnalyzer:
 				#print 2
 				# Insert Statement marking start of block
 				while indentation[i_t]>l:
+					self.__remove_leading_spaces(self.statements[a].statement)
 					self.statements.insert(a,'BLOCK_END')
 					a+=1
 					n+=1
 					indentation.pop()
 					i_t-=1
+			elif l==indentation[len(indentation)-1]:
+				self.__remove_leading_spaces(self.statements[a].statement)
 
 			a+=1
 		if len(indentation)!=0:
@@ -112,6 +127,7 @@ class SyntaxAnalyzer:
 				self.statements.append('BLOCK_END')
 				indentation.pop()
 				i_t-=1
+
 
 	def classify(self):
 		'''Classify the statements into different types'''

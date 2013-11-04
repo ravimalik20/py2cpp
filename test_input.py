@@ -5,8 +5,11 @@ b=20
 c=int(raw_input("Hello World"))
 
 if a>b:
-	print "Hello World"
-	print "bla nlandcndc"
+	if b>c:
+		print "Hello World"
+		print 1
+	else:
+		print "bla nlandcndc"
 
 else:
 	print "Gotcha!!"

@@ -244,6 +244,13 @@ class Parser:
 						self.__place(token)
 						token=""
 					i=self.__handle_string('"',line,i,self.ust)
+				elif line[i]=="=" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place("==")
+					i+=1
+					token=""
 				elif line[i] in self.bchar:
 					if len(token)!=0:
 						self.__place(token)

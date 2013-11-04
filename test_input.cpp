@@ -1,7 +1,5 @@
-#include<variable.h>
-#include<raw_input.h>
-#define and &&
-#define or ||
+#include"variable.h"
+#include"raw_input.h"
 int main()
 {
 Var a;
@@ -14,8 +12,15 @@ Var c;
 c.put((int)(raw_input("Hello World")));
 if(GET(a)>GET(b))
 {
+if(GET(b)>GET(c))
+{
 cout<<"Hello World";
+cout<<1;
+}
+else
+{
 cout<<"bla nlandcndc";
+}
 }
 else
 {
@@ -28,7 +33,7 @@ cout<<GET(b)<<GET(a);
 while(GET(a)!=10)
 {
 cout<<GET(a);
-	a.put(GET(a)+1);
+a.put(GET(a)+1);
 cout<<GET(a);
 cout<<GET(a)+20;
 }

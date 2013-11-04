@@ -24,6 +24,8 @@ parser=parse.Parser(trm_table,ide_table,lit_table)
 
 ust=parser.generate_file(f_name_input)
 
+#print ust
+
 #################### Parser #########################
 
 ###################### Syntax Analyzer ######################
@@ -37,12 +39,18 @@ syntax_analyzer.pre_process_statements()
 
 syntax_analyzer.classify()
 
+syntax_analyzer.show()
+
 ###################### Syntax Analyzer ######################
 
 ######################## Translator ######################
 
 # Declaring translator
 translator=translate.Translator()
+
+print "Grammer:"
+translator.show_grammer()
+
 output=translator.translate(syntax_analyzer.statements)
 
 ######################## Translator ######################
