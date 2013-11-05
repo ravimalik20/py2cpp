@@ -8,7 +8,7 @@ a.put( 10 );
 
 Var b;
 b.put( 20 );
-if(GET(a) >  20  and GET(b) <  30 )
+if(GET(a) <  20  && GET(b) >  30  || GET(b) -  20  <  30  && GET(a) !=  4 )
 {
 cout<< "  Hello World  " ;
 }

@@ -243,6 +243,12 @@ class Translator:
 						declarations+="\nVar %s;\n"%statement[a].token.name
 						self.__arithmetic_ide_table.append(statement[a].token.name)
 					stat+="GET(%s)"%statement[a].token.name
+			elif statement[a].token.name=="and":
+				stat+=" && "
+			elif statement[a].token.name=="or":
+				stat+=" || "
+			elif statement[a].token.name=="not":
+				stat+=" ! "
 			else:
 				stat+=" %s "%statement[a].token.name
 

@@ -4,20 +4,20 @@
 int main()
 {
 Var n;
-n.put((int)(raw_input("Enter the number to calculate factorial")));
-if(GET(n)<0)
+n.put((int) ( raw_input (  "  Enter the number to calculate factorial  "  )  ) );
+if(GET(n) <  0 )
 {
-cout<<"Cannot generate factorial of negative numbers.";
+cout<< "  Cannot generate factorial of negative numbers.  " ;
 }
 else
 {
 
 Var a;
-a.put(1);
-while(GET(n)>0)
+a.put( 1 );
+while(GET(n) >  0 )
 {
-a.put(GET(a)*GET(n));
-n.put(GET(n)-1);
+a.put(GET(a) * GET(n));
+n.put(GET(n) -  1 );
 }
 cout<<GET(a);
 }
