@@ -72,6 +72,7 @@ class SyntaxAnalyzer:
 		for i in range(0,len(self.statements)):
 			# Assumed index of the first non space charachter.
 			a=0
+			print self.statements[i]
 			while self.statements[i].statement[a].token.name==" " or self.statements[i].statement[a].token.name=="\t":
 				a+=1  
 			#print "A:%d"%a 

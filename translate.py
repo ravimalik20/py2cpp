@@ -227,7 +227,10 @@ class Translator:
 					elif statement[a+1].token.name=="(":
 						stat+=statement[a].token.name
 					elif statement[a+1].token.name=="%":
-						stat+="fmod(GET(%s),GET(%s))"%(statement[a].token.name,statement[a+2].token.name)
+						if statement[a+2].type==type_table['lit']:
+							stat+="fmod(GET(%s),%s)"%(statement[a].token.name,statement[a+2].token.name)
+						else:
+							stat+="fmod(GET(%s),GET(%s))"%(statement[a].token.name,statement[a+2].token.name)
 						a+=2
 					else:
 						if statement[a].token.name in self.__arithmetic_ide_table:
