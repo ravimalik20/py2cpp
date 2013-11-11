@@ -82,7 +82,7 @@ class TerminalTable:
 
 	def generate(self,f_name):
 		if len(self.table)!=0:
-			print "Table not empty!! Cannot Generate!!"
+			print "Terminal Table not empty!! Cannot Generate!!"
 			return None
 		else:
 			# Loading the terminals(str)
@@ -94,7 +94,7 @@ class TerminalTable:
 			for i in range(0,len(terms)):
 				self.table.append(Token(i,terms[i]))
 
-			print "Terminal Table generated from file %s!!"%f_name
+			#print "Terminal Table generated from file %s!!"%f_name
 
 	def find(self,token_name):
 		for i in self.table: 

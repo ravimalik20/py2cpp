@@ -3,12 +3,20 @@ import translate
 
 import sys
 
+v=0
+
 if len(sys.argv)<3:
-	print "File names not provided."
-	sys.exit()
+	if len(sys.argv) == 2 :
+		v=1
+	else:
+		print "File names not provided."
+		sys.exit()
 
 f_name_input=sys.argv[1]
-f_name_output=sys.argv[2]
+if v == 0:
+	f_name_output=sys.argv[2]
+else:
+	f_name_output=sys.argv[1].replace('py','cpp')
 
 #################### Parser #########################
 
@@ -39,7 +47,7 @@ syntax_analyzer.pre_process_statements()
 
 syntax_analyzer.classify()
 
-syntax_analyzer.show()
+#syntax_analyzer.show()
 
 ###################### Syntax Analyzer ######################
 
@@ -48,8 +56,8 @@ syntax_analyzer.show()
 # Declaring translator
 translator=translate.Translator()
 
-print "Grammer:"
-translator.show_grammer()
+#print "Grammer:"
+#translator.show_grammer()
 
 output=translator.translate(syntax_analyzer.statements)
 
