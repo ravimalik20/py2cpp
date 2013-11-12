@@ -24,7 +24,7 @@ while t>0:
 	temp=temp+digit*a;
 	a=a/10	
 
-if (num-temp)==0:
+if int(num-temp)==0:
 	print "Number is palindrome!!"
 else:
 	print "Number not palindrome!!"

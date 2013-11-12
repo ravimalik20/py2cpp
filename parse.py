@@ -258,6 +258,48 @@ class Parser:
 					self.__place("==")
 					i+=1
 					token=""
+				elif line[i]=="<" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place("<=")
+					i+=1
+					token=""
+				elif line[i]==">" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place(">=")
+					i+=1
+					token=""
+				elif line[i]=="+" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place("+=")
+					i+=1
+					token=""
+				elif line[i]=="-" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place("-=")
+					i+=1
+					token=""
+				elif line[i]=="*" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place("*=")
+					i+=1
+					token=""
+				elif line[i]=="/" and line[i+1]=="=":
+					if len(token)!=0:
+						self.__place(token)
+						token=""
+					self.__place("/=")
+					i+=1
+					token=""
 				elif line[i] in self.bchar:
 					if len(token)!=0:
 						self.__place(token)
