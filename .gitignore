@@ -1,9 +1,10 @@
 *~
 a.out
 *.o
-to implement
 incomplete/
 *.pyc
-ust.cpkl
+*.cpkl
 hello.py
 Parser/hello.py
+*.cpp
+to implement
