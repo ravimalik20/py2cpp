@@ -1,4 +1,4 @@
-Python to C++ Code Converter
+#Python to C++ Code Converter
 
 The main intention in building this project is to achieve the ease of coding of
 python and execution speed of C/C++. Out of many ways to do so, one of the ways
@@ -10,7 +10,7 @@ might be tough but is computationally possible. Something similar exists but is
 not meant to convert Python to C++. HipHop PHP coverts PHP to C++, developed at
 Facebook.
 
-How to Approach the Project?
+#How to Approach the Project?
 
 The approach i am taking in developing this project is to first identify the
 elements of a programing language that are language independent. And i have
@@ -26,7 +26,7 @@ Obviously, all the statements of python cannot be directly converted to C++
 statements. So we need to implement some of the functionality of Python in C++
 and use it as a module in C++ output source code.
 
-Implementation Details:
+#Implementation Details:
 
 1. First the Python code is lexically parsed to identify the atomic parts that
  make the python code. These will be statements, functions, conditionals,
@@ -42,9 +42,9 @@ Consider the whole process as a jigsaw puzzle with few missing pieces. The
 missing pieces are the identifiers and literals and we place them into the
 output source code to complete it.
 
-Objects to be used in this project:
+#Objects to be used in this project:
 
-INTERMEDIATE STATE:
+##INTERMEDIATE STATE:
 
 1. Block: Similar to the Python and C++ block. It can contain within it
  statements, functions, conditionals, iteratives, etc. 
@@ -52,26 +52,27 @@ INTERMEDIATE STATE:
 2. Block with return: Similar to Block but contains a return value.
  Exp: Function Block
 3. Function: It will have a:
-	3.1. Return Type
-	3.2. Arguments
-	3.3. Function Identifier
-	3.4. Block/Block with return
+  1. Return Type
+  2. Arguments
+  3. Function Identifier
+  4. Block/Block with return
 4. Iterative:
-	4.1. for:
-		4.1.1. range/iterator
-	4.2. while:
-		4.2.1 Condition
-	Common Things: block
+  1. for:
+  range/iterator
+  2. while:
+  Condition
+  Common Things: block
 5. Conditional: If-Else
-	5.1. Condition
-	5.2. If-Block
-	5.3. Else-Block (Optional)
+  1. Condition
+  2. If-Block
+  3. Else-Block (Optional)
 6. Statements:
-	6.1. Arithmetic: a=b+c-d
-	6.2. Declarative: a=10;b=[];c={}
-	6.3. Instructive: print "Hello World"
+  1. Arithmetic: a=b+c-d
+  2. Declarative: a=10;b=[];c={}
+  3. Instructive: print "Hello World"
 
-Step By Step Development of the Code Parsing Stage:
+#Step By Step Development of the Code Parsing Stage:
+
 1. Parse the given python source code to identify terminals, literals and
  identifiers.
 2. Analyse the parsed data to identify statements and categorise them.
