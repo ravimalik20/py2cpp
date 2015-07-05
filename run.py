@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import parse,syntax
 import translate
 
