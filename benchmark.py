@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys
 from datetime import datetime
 import os
@@ -54,10 +56,15 @@ def prepareCSV(data):
 	return csv_string
 
 def exportCSV(csv_string):
-	f = open(str(datetime.now())+".csv", "w")
-	f.write(csv_string);
+	if (len(csv_string) > 0):
+		f = open(str(datetime.now())+".csv", "w")
+		f.write(csv_string);
 
-	f.close();
+		f.close();
+
+def cleanup():
+	os.system("rm -f temp.cpp")
+	os.system("rm -f a.out");
 
 def main():
 	input_files = sys.argv[1:]
@@ -70,6 +77,8 @@ def main():
 
 	csv_string = prepareCSV(data)
 	exportCSV(csv_string)
+
+	cleanup()
 
 if __name__ == "__main__":
 	main()
