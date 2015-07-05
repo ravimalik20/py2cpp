@@ -46,11 +46,14 @@ def prepareCSV(data):
 
 	for rounds_data in data:
 		file_name = rounds_data[0]
-		for single_round in rounds_data[1]:
+
+		for i in range(len(rounds_data[1])):
+			single_round = rounds_data[1][i]
+
 			python_time = single_round[0]
 			cpp_time = single_round[1]
 
-			temp = "%s,%s,%s\n"%(file_name, python_time, cpp_time)
+			temp = "%s,%s,%s,%s\n"%(file_name, i, python_time, cpp_time)
 			csv_string = csv_string + temp
 
 	return csv_string
@@ -58,6 +61,10 @@ def prepareCSV(data):
 def exportCSV(csv_string):
 	if (len(csv_string) > 0):
 		f = open(str(datetime.now())+".csv", "w")
+
+		# Write header on the CSV file
+		f.write("Filename,Round,Time Python,Time Cpp\n")
+		# Write CSV data to file
 		f.write(csv_string);
 
 		f.close();
