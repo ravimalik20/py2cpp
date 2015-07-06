@@ -14,14 +14,14 @@ RUN_FILE = "run.py"
 def stat(file_name, rounds):
 	rounds_data = []
 
+	translate_command = "python %s %s temp.cpp"%(RUN_FILE, file_name)
+	os.system(translate_command)
+
+	compile_command = "g++ temp.cpp"
+	os.system(compile_command)
+
 	for i in range(rounds):
 		data = []
-
-		translate_command = "python %s %s temp.cpp"%(RUN_FILE, file_name)
-		os.system(translate_command)
-
-		compile_command = "g++ temp.cpp"
-		os.system(compile_command)
 
 		python_stat_command = "python %s"%file_name
 		begin = datetime.now()
