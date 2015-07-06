@@ -31,6 +31,9 @@ def stat(file_name, rounds):
 		data.append(elapsed_time.microseconds)
 
 		cpp_stat_command = "./a.out"
+		if os.name == "nt":
+			cpp_stat_command = "a.exe"
+
 		begin = datetime.now()
 		os.system(cpp_stat_command)
 		end = datetime.now()
