@@ -63,9 +63,9 @@ def prepareCSV(data):
 
 def exportCSV(csv_string):
 	if (len(csv_string) > 0):
-                out_file_name = str(datetime.now())+".csv";
-                if os.name == "nt":
-                        out_file_name = out_file_name.replace(":", "_", 2)
+		out_file_name = str(datetime.now())+".csv";
+		if os.name == "nt":
+			out_file_name = out_file_name.replace(":", "_", 2)
                 
 		f = open(out_file_name, "w")
 
@@ -80,9 +80,9 @@ def cleanup():
 	os.system("rm -f temp.cpp")
 
 	if os.name == "nt":
-                os.system("rm -f a.exe")
-        else:
-                os.system("rm -f a.out");
+		os.system("rm -f a.exe")
+	else:
+		os.system("rm -f a.out")
 
 def main():
 	input_files = sys.argv[1:]
